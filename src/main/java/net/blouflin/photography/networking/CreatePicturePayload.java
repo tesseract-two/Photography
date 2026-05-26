@@ -46,7 +46,7 @@ public record CreatePicturePayload(Integer id, CompoundTag nbtCompound) implemen
                 PhotographyHud.spyglassFlashOpacity = 1.0f;
                 PhotographyHud.isTakingPhoto = false;
 
-                Screenshot.takeScreenshot(client.getMainRenderTarget(), (nativeImage -> {
+                Screenshot.takeScreenshot(client.gameRenderer.mainRenderTarget(), (nativeImage -> {
                     int[] pixels = nativeImage.getPixels();
                     BufferedImage bufferedImage = new BufferedImage(nativeImage.getWidth(), nativeImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
                     bufferedImage.setRGB(0, 0, nativeImage.getWidth(), nativeImage.getHeight(), pixels, 0, nativeImage.getWidth());

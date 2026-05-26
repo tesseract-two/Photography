@@ -45,12 +45,12 @@ public class PhotographyHud {
         float f = client.getDeltaTracker().getGameTimeDeltaTicks();
         spyglassScale = Mth.lerp(0.5f * f, spyglassScale, 1.125f);
 
-        if (client.options.getCameraType().isFirstPerson() && client.screen == null) {
+        if (client.options.getCameraType().isFirstPerson() && client.gui.screen() == null) {
             if (isTakingPhoto) {
                 CAMERA_SCOPE_TO_RENDER = CAMERA_SCOPE_CLEAR;
             }
 
-            client.options.hideGui = true;
+            if (!client.gui.hud.isHidden()) { client.gui.hud.toggle(); }
             checkIsPhotographyCameraOpen(client);
             if (!isHUDhidden) {
                 renderSpyglassOverlay(context, spyglassScale);
@@ -78,7 +78,7 @@ public class PhotographyHud {
 
     public static void stopRenderPhotographyCameraOverlay() {
         client.options.sensitivity().set(defaultMouseSensitivity);
-        client.options.hideGui = isHUDhidden;
+        if (client.gui.hud.isHidden() != isHUDhidden) { client.gui.hud.toggle(); }
         spyglassFlashOpacity = 0.0f;
         spyglassScale = 0.5f;
         canTakePhoto = false;
