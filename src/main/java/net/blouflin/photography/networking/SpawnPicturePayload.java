@@ -45,6 +45,7 @@ public record SpawnPicturePayload(Integer id, CompoundTag nbtCompound) implement
             stack.set(DataComponents.ITEM_NAME, Component.translatableWithFallback("photography:filled_map", "Photograph"));
 
             if(!player.isCreative()) {
+                // legacy item format support; TODO: remove later
                 ItemStack itemStack = new ItemStack(Items.FILLED_MAP);
                 itemStack.update(DataComponents.CUSTOM_DATA, CustomData.EMPTY, comp -> comp.update(currentNbt -> {
                     currentNbt.putBoolean("isPhotographyEmptyMap",true);
@@ -52,7 +53,22 @@ public record SpawnPicturePayload(Integer id, CompoundTag nbtCompound) implement
                 itemStack.set(DataComponents.CUSTOM_MODEL_DATA, new CustomModelData(List.of(56775F), List.of(), List.of(), List.of()));
                 itemStack.set(DataComponents.ITEM_NAME, Component.translatableWithFallback("photography:empty_map", "Photographic Paper"));
 
-                int slot = player.getInventory().findSlotMatchingItem(itemStack);
+
+                ItemStack itemStackNew = new ItemStack(Items.PAPER);
+                itemStackNew.update(DataComponents.CUSTOM_DATA, CustomData.EMPTY, comp -> comp.update(currentNbt -> {
+                    currentNbt.putBoolean("isPhotographyEmptyMap",true);
+                }));
+                itemStackNew.set(DataComponents.CUSTOM_MODEL_DATA, new CustomModelData(List.of(56775F), List.of(), List.of(), List.of()));
+                itemStackNew.set(DataComponents.ITEM_NAME, Component.translatableWithFallback("photography:empty_map", "Photographic Paper"));
+
+                int itemCheck1 = player.getInventory().findSlotMatchingItem(itemStack);
+                int itemCheck2 = player.getInventory().findSlotMatchingItem(itemStackNew);
+                int slot = -1;
+                if (itemCheck1 != -1) {
+                    slot = itemCheck1;
+                } else if (itemCheck2 != -1) {
+                    slot = itemCheck2;
+                }
                 if(slot != -1) {
                     convertStack(player, slot, stack);
                 } else if (player.getItemInHand(InteractionHand.OFF_HAND).getItem() == itemStack.getItem()) { // required to decrement offhand
