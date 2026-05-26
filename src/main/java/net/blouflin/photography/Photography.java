@@ -56,7 +56,7 @@ public class Photography implements ModInitializer {
 		photographyCamera.set(DataComponents.ITEM_NAME, Component.literal("Camera"));
 		entries.addAfter(Items.MAP, photographyCamera);
 
-		ItemStack photographicPaper = new ItemStack(Items.FILLED_MAP);
+		ItemStack photographicPaper = new ItemStack(Items.PAPER);
 		photographicPaper.update(DataComponents.CUSTOM_DATA, CustomData.EMPTY, comp -> comp.update(currentNbt -> {
 			currentNbt.putBoolean("isPhotographyEmptyMap",true);
 		}));

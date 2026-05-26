@@ -1,0 +1,24 @@
+{
+  "model": {
+
+    "type": "minecraft:range_dispatch",
+    "property": "minecraft:custom_model_data",
+    "index": 0,
+    "entries": [
+      {
+        "threshold": 56775,
+        "model":{
+          "type": "minecraft:model",
+          "model": "photography:item/empty_photographic_paper"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "minecraft:item/paper"
+    }
+  },
+  "properties": {
+    "hand_animation_on_swap": true
+  }
+}

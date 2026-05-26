@@ -8,7 +8,7 @@
     "minecraft:magenta_dye"
   ],
   "result": {
-    "id": "minecraft:filled_map",
+    "id": "minecraft:paper",
     "count": 1,
     "components": {
       "minecraft:item_name": {
